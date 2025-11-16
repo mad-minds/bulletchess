@@ -44,6 +44,7 @@ bool is_nfold_repetition(full_board_t *board, undoable_move_t *move_stack,
 								size_t stack_size, u_int8_t n);
 
 
+bool is_twofold_repetition(full_board_t *board, undoable_move_t *stack, size_t stack_size);
 bool is_fivefold_repetition(full_board_t *board, undoable_move_t *stack, size_t stack_size);
 bool is_threefold_repetition(full_board_t *board, undoable_move_t *stack, size_t stack_size);
 
@@ -77,6 +78,7 @@ typedef u_int8_t board_status_t;
 #define SEVENTY_FIVE_MOVE_TIMEOUT 16
 #define THREE_FOLD_REPETITION 32
 #define FIVE_FOLD_REPETITION 64
+#define TWO_FOLD_REPETITION 128
 #define RESIGNATION 128
 #define DRAW_STATUS 129
 #define FORCED_DRAW_STATUS 130

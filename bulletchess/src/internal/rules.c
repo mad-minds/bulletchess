@@ -1562,6 +1562,11 @@ bool is_fivefold_repetition(full_board_t *board,
 }
 
 
+bool is_twofold_repetition(full_board_t *board, 
+		undoable_move_t *stack, size_t stack_size){
+	return is_nfold_repetition(board, stack, stack_size, 2);
+}
+
 bool is_threefold_repetition(full_board_t *board, 
 		undoable_move_t *stack, size_t stack_size){
 	return is_nfold_repetition(board, stack, stack_size, 3);

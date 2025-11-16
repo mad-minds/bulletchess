@@ -2701,6 +2701,7 @@ PyObject *MATE_OBJ = NULL;
 PyObject *INSUFFICIENT_OBJ = NULL;
 PyObject *FIFTY_OBJ = NULL;
 PyObject *SEVENTY_FIVE_OBJ = NULL;
+PyObject *TWO_FOLD_OBJ = NULL;
 PyObject *THREE_FOLD_OBJ = NULL;
 PyObject *FIVE_FOLD_OBJ = NULL;
 PyObject *DRAW_OBJ= NULL;
@@ -2715,6 +2716,7 @@ static bool PyBoardStatus_make_all(){
 	MAKE_STATUS(INSUFFICIENT_OBJ, INSUFFICIENT_MATERIAL);
 	MAKE_STATUS(FIFTY_OBJ, FIFTY_MOVE_TIMEOUT);
 	MAKE_STATUS(SEVENTY_FIVE_OBJ, SEVENTY_FIVE_MOVE_TIMEOUT);
+	MAKE_STATUS(TWO_FOLD_OBJ, TWO_FOLD_REPETITION);
 	MAKE_STATUS(THREE_FOLD_OBJ, THREE_FOLD_REPETITION);
 	MAKE_STATUS(FIVE_FOLD_OBJ, FIVE_FOLD_REPETITION);
 	MAKE_STATUS(DRAW_OBJ, DRAW_STATUS);
@@ -2728,6 +2730,7 @@ static bool PyBoardStatus_make_all(){
 	Py_XDECREF(INSUFFICIENT_OBJ);
 	Py_XDECREF(FIFTY_OBJ);
 	Py_XDECREF(SEVENTY_FIVE_OBJ);
+	Py_XDECREF(TWO_FOLD_OBJ);
 	Py_XDECREF(THREE_FOLD_OBJ);
 	Py_XDECREF(FIVE_FOLD_OBJ);
 	Py_XDECREF(DRAW_OBJ);
@@ -2755,6 +2758,8 @@ static PyObject *PyBoardStatus_repr(PyObject *self){
 			str = "FIFTY_MOVE_TIMEOUT"; break;
 		case SEVENTY_FIVE_MOVE_TIMEOUT:
 			str = "SEVENTY_FIVE_MOVE_TIMEOUT"; break;
+		case TWO_FOLD_REPETITION:
+			str = "TWO_FOLD_REPETITION"; break;
 		case THREE_FOLD_REPETITION:
 			str = "THREE_FOLD_REPETITION"; break;
 		case FIVE_FOLD_REPETITION:
@@ -2788,6 +2793,9 @@ static int PyBoardStatus_contains(PyObject *self, PyObject *arg) {
 			return can_claim_fifty(board) ? 1 : 0;
 		case SEVENTY_FIVE_MOVE_TIMEOUT:
 			return is_seventy_five(board) ? 1 : 0;
+		case TWO_FOLD_REPETITION:
+			return is_twofold_repetition(
+					board, board_obj->move_stack, board_obj->stack_size) ? 1 : 0;
 		case THREE_FOLD_REPETITION:
 			return is_threefold_repetition(
 					board, board_obj->move_stack, board_obj->stack_size) ? 1 : 0;	
@@ -4057,6 +4065,7 @@ PyMODINIT_FUNC PyInit__core(void) {
 		ADD_OBJ("INSUFFICIENT_MATERIAL", INSUFFICIENT_OBJ);
 		ADD_OBJ("FIFTY_MOVE_TIMEOUT", FIFTY_OBJ);
 		ADD_OBJ("SEVENTY_FIVE_MOVE_TIMEOUT", SEVENTY_FIVE_OBJ);
+		ADD_OBJ("TWOFOLD_REPETITION", TWO_FOLD_OBJ);
 		ADD_OBJ("THREEFOLD_REPETITION", THREE_FOLD_OBJ);
 		ADD_OBJ("FIVEFOLD_REPETITION", FIVE_FOLD_OBJ);
 
